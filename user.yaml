@@ -1,0 +1,22 @@
+- name: Create user
+  hosts: centossf
+  become: yes
+  tasks:
+    - name: Create new user
+      user:
+        name: user1
+    - name: Create .ssh folder
+      file:
+        path: ~user1/.ssh
+        state: directory
+        owner: user1
+        group: user1
+        mode: 0700
+    - name: Upload SSH key
+      copy:
+        src: user1.key.enc
+        dest: ~user1/.ssh/id_rsa
+        decrypt: yes
+        owner: user1
+        group: user1
+        mode: 0400
