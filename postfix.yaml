@@ -1,0 +1,20 @@
+---
+- name: Test connection, install/uninstall postfix
+  hosts: centossf
+  become: yes
+
+  tasks:
+  - name: ping server
+    ping:
+    tags:
+    - ping
+
+  - name: install postfix
+    yum: name=postfix state=latest
+    tags:
+    - init postfix
+
+  - name: remove postfix
+    yum: name=postfix state=absent
+    tags:
+    - drop postfix
